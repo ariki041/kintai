@@ -1,4 +1,5 @@
 ﻿<?php
+
 /**
  * Application level Controller
  *
@@ -31,20 +32,21 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
-	//DebugKitの導入
-	public $components = array('DebugKit.Toolbar');
+   //DebugKitの導入
+   public $components = array('DebugKit.Toolbar');
 
-	//public $viewClass = 'SmartyView.Smarty';
-	public $viewClass = 'Smarty';
+   //public $viewClass = 'SmartyView.Smarty';
+   public $viewClass = 'Smarty';
 
 
-	public $helpers = array(
-        'SmartyHtml'=>'',
-        'SmartyForm'=>'',
-        'SmartySession'=>'',
-        'SmartyJavascript'=>'',
-        'Html'=>'', 'Session'=>''
-    );
+   public $helpers = array(
+      'SmartyHtml' => '',
+      'SmartyForm' => '',
+      'SmartySession' => '',
+      'SmartyJavascript' => '',
+      'Html' => '', 'Session' => ''
+   );
 }

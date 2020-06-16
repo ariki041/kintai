@@ -10,7 +10,7 @@
 
 	<div class="row">
 		<div class="col-sm-2 col-sm-offset-7 col-xs-offset-6">
-			<button class="btn" onclick="location.href='/kintai/Admin/index'">管理画面へ戻る</button>
+			<button class="btn" onclick="location.href='/admin/index'">管理画面へ戻る</button>
 		</div>
 	</div>
 

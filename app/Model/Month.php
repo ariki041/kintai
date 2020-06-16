@@ -2,5 +2,6 @@
 
 App::uses('AppModel', 'Model');
 
-class Month extends AppModel{
+class Month extends AppModel
+{
 }

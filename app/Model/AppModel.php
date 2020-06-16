@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application model for CakePHP.
  *
@@ -29,28 +30,31 @@ App::uses('Model', 'Model');
  *
  * @package       app.Model
  */
-class AppModel extends Model {
+class AppModel extends Model
+{
 
 
-	public function optionlist($queryresult, $tableName, $key, $value) {
+   public function optionlist($queryresult, $tableName, $key, $value)
+   {
 
-		$result = array();
+      $result = array();
 
-		foreach($queryresult as $item) {
-			$row = $item[$tableName];
-			$k = $row[$key];
-			$v = $row[$value];
-			$result[$k] = $v;
-		}
-		return $result;
-	}
-	
-	//SQL確認用
-	//$モデル->sql();
-	public function sql(){
-  		$sql = $this->getDataSource()->getLog();
+      foreach ($queryresult as $item) {
+         $row = $item[$tableName];
+         $k = $row[$key];
+         $v = $row[$value];
+         $result[$k] = $v;
+      }
+      return $result;
+   }
 
-  		$this->log($sql);
-  		return $sql;
-	}
+   //SQL確認用
+   //$モデル->sql();
+   public function sql()
+   {
+      $sql = $this->getDataSource()->getLog();
+
+      $this->log($sql);
+      return $sql;
+   }
 }
