@@ -106,6 +106,7 @@
                      </div>
                   </td>
                   <td id="worktime_<!--{$date[date]['day']}-->"></td>
+                  <input type="hidden"  name="worktime" id="ip_worktime_<!--{$date[date]['day']}-->" value="<!--{$date[date]['work']['worktime']}-->">
                   <td><input class="form-control" name="work_contents" value="<!--{$date[date]['work']['work_contents']}-->"></td>
                   <td><input type="hidden">
                      <!--{html_options name=day_state id="day_state_`$date[date]['day']`" options=$day_state selected=$date[date]['day_name_selected']}-->

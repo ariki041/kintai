@@ -202,21 +202,16 @@ class UsersController extends AppController
 
          //承認依頼
          if (isset($this->request->data['approvalBtn'])) {
-            $start = explode(':', $this->request->data['syukkin']);
-            $end = explode(':', $this->request->data['taikin']);
-            $diff = 0;
 
-            if (isset($start[0], $start[1], $end[0], $end[1])) {
-               $diff = abs(((int) $start[0] * 60 + (int) $start[1]) - ((int) $end[0] * 60 + (int) $end[1]));
-            }
+            $work_contents = htmlentities($this->request->data['work_contents']);
 
             $work = array(
                'syukkin' => str_replace(":", "", $this->request->data['syukkin'] . '00'),
                'taikin' => str_replace(":", "", $this->request->data['taikin'] . '00'),
                'recess_time1' => str_replace(":", "", $this->request->data['recess_time1'] . '00'),
                'recess_time2' => str_replace(":", "", $this->request->data['recess_time2'] . '00'),
-               'worktime' => sprintf("%02d", $diff / 60) . sprintf("%02d", $diff % 60) . '00',
-               'work_contents' => htmlentities($this->request->data['work_contents']),
+               'worktime' => str_replace(":", "", str_replace(" ", "", $this->request->data['worktime']) . '00'),
+               'work_contents' => "'{$work_contents}'",
                'day_name' => $this->request->data['day_state'],
                'approval' => 1
             );
@@ -229,10 +224,6 @@ class UsersController extends AppController
                   $work = array_merge(array('mail_address' => $this->Auth->user()['mail_address'], 'date' => $this->request->data['approvalBtn']), $work);
                   $this->Work->save($work); //INSERTする
                } else {
-                  //サニタイズ処理
-                  foreach ($work as $key => $value) {
-                     $work[$key] = "'" . Sanitize::escape($value) . "'";
-                  }
                   $this->Work->updateAll( //UPDATEする
                      $work,
                      array('mail_address' => $this->Auth->user()['mail_address'], 'date' => $this->request->data['approvalBtn'])
@@ -248,6 +239,8 @@ class UsersController extends AppController
             } else {
                $this->set('validationDate', explode('-', $this->request->data['approvalBtn'])[2]);
             }
+
+            //$this->redirect($this->request->referer());
          }
 
          //承認依頼中から入力中に変更する
@@ -335,6 +328,7 @@ class UsersController extends AppController
             $sheet->setCellValue('M' . $row, $d['week']);
             $sheet->setCellValue('N' . $row, isset($d['work']['syukkin']) ? $d['work']['syukkin'] : '');
             $sheet->setCellValue('O' . $row, isset($d['work']['taikin']) ? $d['work']['taikin'] : '');
+            $sheet->setCellValue('P' . $row, isset($d['work']['taikin']) ? $d['work']['taikin'] : '');
             $sheet->setCellValue('Q' . $row, isset($d['work']['worktime']) ? $d['work']['worktime'] : '');
             $sheet->setCellValue('S' . $row, isset($d['work']['work_contents']) ? $d['work']['work_contents'] : '');
 
@@ -347,7 +341,6 @@ class UsersController extends AppController
 
 
          //ダウンロード
-         Configure::write('debug', 0);       // debugコードを非表示
          header('Content-Type: application/octet-stream');
          ob_end_clean();
          header('Content-Disposition: attachment;filename="' . $filename . '"');
